@@ -11,13 +11,38 @@ namespace Triangle_V.A_TARpv23
         public double a; // 1-ая сторона
         public double b; // 2-ая сторона
         public double c; // 3-я сторона
+        public double alpha; // Придумайте еще: угол между сторонами a и b
 
-        public Triangle(double A, double B, double C) // конструктор
+
+        public Triangle(double A, double B, double C, double Alpha) // конструктор
         {
             a = A;
             b = B;
             c = C;
+            alpha = Alpha;
         }
+
+        // Придумайте еще: Конструктор без параметров
+        public Triangle()
+        {
+            a = 1;
+            b = 1;
+            c = 1;
+            alpha = Math.PI / 2; // угол 90
+        }
+
+        // Метод для вычисления полупериметра
+        public double PoolPerimeeter()
+        {
+            return (a + b + c) / 2;
+        }
+
+        // Метод для вычисления площади через стороны и угол
+        public double PindalaArvutamine()
+        {
+            return 0.5 * a * b * Math.Sin(alpha); // Площадь через две стороны и угол
+        }
+
         // Добавим методы
         public string outputA()
         {
@@ -32,6 +57,10 @@ namespace Triangle_V.A_TARpv23
         {
             return Convert.ToString(c);
         }
+        public string outputAlpha()
+        {
+            return Convert.ToString(alpha);
+        }
         public double Perimeter()
         {
             double p = 0;
@@ -43,9 +72,10 @@ namespace Triangle_V.A_TARpv23
             double s = 0;
             double p = 0;
             p = (a + b + c) / 2;
-            s = Math.Sqrt((p * (p - a) * (p - b) * (p - c)));
+            s = Math.Sqrt(p * (p - a) * (p - b) * (p - c));
             return s;
         }
+
         // Добавим свойства
         public double GetSetA
         {
@@ -71,6 +101,31 @@ namespace Triangle_V.A_TARpv23
                 if ((a>b+c) && (b>a+c) && (c>a+b))
                 return false; 
                 else return true;
+            }
+        }
+        public string TriangleType
+        {
+            get
+            {
+                if (ExistTriangle)
+                {
+                    if (a == b && b == c && a == c)
+                    {
+                        return "Võrdkülgne";
+                    }
+                    else if (a == b || b == c || a == c)
+            {
+                        return "Võrdhaarne";
+                    }
+            else
+                    {
+                        return "Skaleeni kolmnurk";
+                    }
+                }
+                else
+                {
+                    return "Tundmatu tüüp";
+                }
             }
         }
     }
