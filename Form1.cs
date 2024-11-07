@@ -60,11 +60,12 @@ namespace Triangle_V.A_TARpv23
 
             lblAlpha = new Label();
             lblAlpha.Text = "Угол Alpha : ";
-            lblAlpha.Font = new Font("Arial", 10, FontStyle.Italic);
-            lblAlpha.ForeColor = Color.MediumVioletRed;
+            lblAlpha.Font = new Font("Arial", 10, FontStyle.Bold);
+            lblAlpha.ForeColor = Color.DeepPink;
             lblAlpha.AutoSize = true;
             lblAlpha.Location = new Point(50, 340);
             Controls.Add(lblAlpha);
+
 
             btn = new Button();
             btn.AutoSize = true;
@@ -116,65 +117,50 @@ namespace Triangle_V.A_TARpv23
             Controls.Add(pbox);
 
         }
-
+        int t = 0;
         private void Btn_Click(object sender, EventArgs e)
         {
-            double a, b, c, alpha;
-            a = Convert.ToDouble(txtA.Text);
-            b = Convert.ToDouble(txtB.Text);
-            c = Convert.ToDouble(txtC.Text);
-            alpha = Convert.ToDouble(txtAlpha.Text);
-            Triangle triangle = new Triangle(a, b, c, alpha);
-            listView1.Items.Add("Сторона a");
-            listView1.Items.Add("Сторона b");
-            listView1.Items.Add("Сторона c");
-            listView1.Items.Add("Угол Alpha");
-            listView1.Items.Add("Периметр");
-            listView1.Items.Add("Площадь");
-            listView1.Items.Add("Полупериметр");
-            listView1.Items.Add("Существует?");
-            listView1.Items.Add("Спецификатор");
-            listView1.Items[0].SubItems.Add(triangle.outputA());
-            listView1.Items[1].SubItems.Add(triangle.outputB());
-            listView1.Items[2].SubItems.Add(triangle.outputC());
-            listView1.Items[3].SubItems.Add(triangle.outputAlpha());
-            listView1.Items[4].SubItems.Add(Convert.ToString(triangle.Perimeter()));
-            listView1.Items[5].SubItems.Add(Convert.ToString(triangle.Surface()));
-            listView1.Items[6].SubItems.Add(Convert.ToString(triangle.PoolPerimeeter()));
-            if (triangle.ExistTriangle)
+            t++;
+            if (t % 2 == 0)
             {
-                listView1.Items[7].SubItems.Add("Существует");
+                Form2 form2 = new Form2();
+                form2.Show();
             }
             else
             {
-                listView1.Items[7].SubItems.Add("Не существует");
-            }
-
-            // Задаем картинку в PictureBox в зависимости от типа треугольника
-            if (triangle.ExistTriangle)
-            {
-                // Определяем тип треугольника
-                switch (triangle.TriangleType)
+                double a, b, c, alpha;
+                a = Convert.ToDouble(txtA.Text);
+                b = Convert.ToDouble(txtB.Text);
+                c = Convert.ToDouble(txtC.Text);
+                alpha = Convert.ToDouble(txtAlpha.Text);
+                Triangle triangle = new Triangle(a, b, c, alpha);
+                listView1.Items.Clear();
+                listView1.Items.Add("Сторона a");
+                listView1.Items.Add("Сторона b");
+                listView1.Items.Add("Сторона c");
+                listView1.Items.Add("Угол Alpha");
+                listView1.Items.Add("Периметр");
+                listView1.Items.Add("Площадь");
+                listView1.Items.Add("Полупериметр");
+                listView1.Items.Add("Существует?");
+                listView1.Items.Add("Спецификатор");
+                listView1.Items[0].SubItems.Add(triangle.outputA());
+                listView1.Items[1].SubItems.Add(triangle.outputB());
+                listView1.Items[2].SubItems.Add(triangle.outputC());
+                listView1.Items[3].SubItems.Add(triangle.outputAlpha());
+                listView1.Items[4].SubItems.Add(Convert.ToString(triangle.Perimeter()));
+                listView1.Items[5].SubItems.Add(Convert.ToString(triangle.Surface()));
+                listView1.Items[6].SubItems.Add(Convert.ToString(triangle.PoolPerimeeter()));
+                if (triangle.ExistTriangle)
                 {
-                    case "Võrdkülgne":
-                        pbox.Image = Image.FromFile(@"..\..\Vordkulgne.png"); // Картинка для равностороннего треугольника
-                        break;
-                    case "Võrdhaarne":
-                        pbox.Image = Image.FromFile(@"..\..\Vordhaarne.png"); // Картинка для равнобедренного треугольника
-                        break;
-                    case "Skaleeni kolmnurk":
-                        pbox.Image = Image.FromFile(@"..\..\Skaleeni kolmnurk.png"); // Картинка для разностороннего треугольника
-                        break;
-                    default:
-                        pbox.Image = null; // Если не определен тип треугольника
-                        break;
+                    listView1.Items[7].SubItems.Add("Существует");
                 }
+                else
+                {
+                    listView1.Items[7].SubItems.Add("Не существует");
+                }
+                pbox.Invalidate();
             }
-            else
-            {
-                pbox.Image = null; // Если треугольник не существует
-            }
-            pbox.Invalidate(); // Обновляем PictureBox, чтобы отобразить новую картинку}
-        }
+        }    
     }
 }

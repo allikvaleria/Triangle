@@ -14,21 +14,20 @@ namespace Triangle_V.A_TARpv23
         public double alpha; // Придумайте еще: угол между сторонами a и b
 
 
-        public Triangle(double A, double B, double C, double Alpha) // конструктор
+        public Triangle(double A, double B, double C) // конструктор
+        {
+            a = A;
+            b = B;
+            c = C;
+        }
+
+        // Придумайте еще: Конструктор без параметров
+        public Triangle(double A, double B, double C, double Alpha)
         {
             a = A;
             b = B;
             c = C;
             alpha = Alpha;
-        }
-
-        // Придумайте еще: Конструктор без параметров
-        public Triangle()
-        {
-            a = 1;
-            b = 1;
-            c = 1;
-            alpha = Math.PI / 2; // угол 90
         }
 
         // Метод для вычисления полупериметра
