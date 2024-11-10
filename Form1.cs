@@ -16,6 +16,12 @@ namespace Triangle_V.A_TARpv23
         PictureBox pbox;
         Button btn;
         TextBox txtA, txtB, txtC, txtAlpha;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         ListView listView1;
         public Form1()
         {

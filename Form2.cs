@@ -14,8 +14,14 @@ namespace Triangle_V.A_TARpv23
     {
         Label lblA, lblB, lblC, lblAlpha;
         PictureBox pbox;
-        Button btn;
+        Button btn, btnxml;
         TextBox txtA, txtB, txtC, txtAlpha;
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
+
         ListView listView1;
         public Form2()
         {
@@ -70,7 +76,7 @@ namespace Triangle_V.A_TARpv23
             btn.AutoSize = true;
             btn.Text = "Запуск";
             btn.BackColor = Color.DeepPink;
-            btn.Font = new Font("Arial", 30, FontStyle.Italic);
+            btn.Font = new Font("Arial", 15, FontStyle.Italic);
             btn.Cursor = Cursors.Hand;
             btn.FlatAppearance.BorderColor = Color.DodgerBlue;
             btn.FlatAppearance.BorderSize = 5;
@@ -78,6 +84,19 @@ namespace Triangle_V.A_TARpv23
             btn.Location = new Point(500, 40);
             Controls.Add(btn);
             btn.Click += Btn_Click;
+
+            btnxml = new Button();
+            btnxml.AutoSize = true;
+            btnxml.Text = "Сохранить в xml файл";
+            btnxml.BackColor = Color.DeepPink;
+            btnxml.Font = new Font("Arial", 15, FontStyle.Italic);
+            btnxml.Cursor = Cursors.Hand;
+            btnxml.FlatAppearance.BorderColor = Color.DodgerBlue;
+            btnxml.FlatAppearance.BorderSize = 5;
+            btnxml.FlatStyle = FlatStyle.Flat;
+            btnxml.Location = new Point(500, 90);
+            Controls.Add(btnxml);
+            btnxml.Click += Btnxml_Click;
 
             txtA = new TextBox();
             txtA.Location = new Point(150, 250);
@@ -114,6 +133,62 @@ namespace Triangle_V.A_TARpv23
             pbox.SizeMode = PictureBoxSizeMode.Zoom;
             Controls.Add(pbox);
         }
+
+        private void Btnxml_Click(object sender, EventArgs e)
+        {
+            // Проверяем, что все поля заполнены
+            if (txtA.Text == "" || txtB.Text == "" || txtC.Text == "" || txtAlpha.Text == "")
+            {
+                MessageBox.Show("Ошибка! Заполните все поля!");
+                return;
+            }
+
+            double a = Convert.ToDouble(txtA.Text);
+            double b = Convert.ToDouble(txtB.Text);
+            double c = Convert.ToDouble(txtC.Text);
+            double alpha = Convert.ToDouble(txtAlpha.Text);
+
+            // Создаем или открываем XML файл
+            var xmlDocument = new System.Xml.XmlDocument();
+
+            // Если файл существует, загружаем его, иначе создаем новый корневой элемент
+            if (System.IO.File.Exists("kolmnurgad.xml"))
+            {
+                xmlDocument.Load("kolmnurgad.xml");
+            }
+            else
+            {
+                var root = xmlDocument.CreateElement("Triangles");
+                xmlDocument.AppendChild(root);
+            }
+
+            // Создаем элемент для нового треугольника
+            var triangleElement = xmlDocument.CreateElement("Triangle");
+
+            var külgA = xmlDocument.CreateElement("Сторона А");
+            külgA.InnerText = a.ToString();
+            triangleElement.AppendChild(külgA);
+
+            var külgB = xmlDocument.CreateElement("Сторона B");
+            külgB.InnerText = b.ToString();
+            triangleElement.AppendChild(külgB);
+
+            var külgC = xmlDocument.CreateElement("Сторона C");
+            külgC.InnerText = c.ToString();
+            triangleElement.AppendChild(külgC);
+
+            var NurkAlfa = xmlDocument.CreateElement("Угол Альфа");
+            NurkAlfa.InnerText = alpha.ToString();
+            triangleElement.AppendChild(NurkAlfa);
+
+            // Добавляем новый треугольник в корневой элемент
+            xmlDocument.DocumentElement.AppendChild(triangleElement);
+
+            xmlDocument.Save("kolmnurgad.xml");
+
+            MessageBox.Show("Треугольник сохранен в XML!");
+        }
+    
 
         private void Btn_Click(object sender, EventArgs e)
         {

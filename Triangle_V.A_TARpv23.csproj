@@ -90,6 +90,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="kolmnurgad.xml" />
     <Content Include="ravnostoronij.jpg" />
     <Content Include="rtr1.png" />
     <Content Include="Triangle.png" />

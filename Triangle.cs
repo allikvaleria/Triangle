@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.IO;         
 
 namespace Triangle_V.A_TARpv23
 {
@@ -127,5 +129,33 @@ namespace Triangle_V.A_TARpv23
                 }
             }
         }
+        // Mетод для сохранения данных о рассмотренных треугольниках в kolmnurgad.xml файл. 
+        public void SaveToXml()
+        {
+            string filePath = "kolmnurgad.xml";
+
+            XDocument doc;
+            if (File.Exists(filePath))
+            {
+                doc = XDocument.Load(filePath);
+            }
+            else
+            {
+                doc = new XDocument(new XElement("Triangles"));
+            }
+
+            XElement triangleElement = new XElement("Triangle",
+                new XElement("SideA", a),
+                new XElement("SideB", b),
+                new XElement("SideC", c),
+                new XElement("AngleAlpha", alpha),
+                new XElement("Perimeter", Perimeter()),
+                new XElement("Exists", ExistTriangle ? "Yes" : "No")
+            );
+
+            doc.Root.Add(triangleElement);
+            doc.Save(filePath);
+        }
     }
 }
+    
