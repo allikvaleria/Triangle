@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.IO;         
+using System.Windows.Forms;
+using System.Xml;
 
 namespace Triangle_V.A_TARpv23
 {
-    class Triangle
+    internal class Triangle
     {
         public double a; // 1-ая сторона
         public double b; // 2-ая сторона
@@ -129,32 +129,44 @@ namespace Triangle_V.A_TARpv23
                 }
             }
         }
-        // Mетод для сохранения данных о рассмотренных треугольниках в kolmnurgad.xml файл. 
-        public void SaveToXml()
+        // Метод для сохранения треугольников в XML-файл
+        public static void Salvesta(List<Triangle> triangles, string filePath = @"..\..\kolmnurgad.xml")
         {
-            string filePath = "kolmnurgad.xml";
-
-            XDocument doc;
-            if (File.Exists(filePath))
+            try
             {
-                doc = XDocument.Load(filePath);
+               
+
+                // Создается XML Writer для записи в файл
+                using (XmlWriter xmlwriter = XmlWriter.Create(filePath))
+                {
+                    xmlwriter.WriteStartDocument(); // Начинает
+                    xmlwriter.WriteStartElement("Triangles"); // Открывает элемент "Triangles"
+
+                    foreach (var triangle in triangles)
+                    {
+                        xmlwriter.WriteStartElement("Triangle");
+
+                        // Записываем каждый атрибут треугольника как отдельный элемент
+                        xmlwriter.WriteElementString("Külg_A", triangle.a.ToString());
+                        xmlwriter.WriteElementString("Külg_B", triangle.b.ToString());
+                        xmlwriter.WriteElementString("Külg_C", triangle.c.ToString());
+                        xmlwriter.WriteElementString("Alpha", triangle.alpha.ToString());
+                        xmlwriter.WriteElementString("Perimeeter", triangle.Perimeter().ToString());
+                        xmlwriter.WriteElementString("Poolperimeeter", triangle.PoolPerimeeter().ToString());
+                        xmlwriter.WriteElementString("Piirkond", triangle.PindalaArvutamine().ToString());
+                        xmlwriter.WriteElementString("Täpsustaja", triangle.TriangleType);
+
+                        xmlwriter.WriteEndElement(); // Закрываем элемент "Triangle" 
+                    }
+
+                    xmlwriter.WriteEndElement(); // Закрывает элемент "Triangles"
+                    xmlwriter.WriteEndDocument(); // Завершаем
+                }
             }
-            else
+            catch (Exception ex)
             {
-                doc = new XDocument(new XElement("Triangles"));
+                MessageBox.Show("Viga faili salvestamisel: " + ex.Message, "Viga!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            XElement triangleElement = new XElement("Triangle",
-                new XElement("SideA", a),
-                new XElement("SideB", b),
-                new XElement("SideC", c),
-                new XElement("AngleAlpha", alpha),
-                new XElement("Perimeter", Perimeter()),
-                new XElement("Exists", ExistTriangle ? "Yes" : "No")
-            );
-
-            doc.Root.Add(triangleElement);
-            doc.Save(filePath);
         }
     }
 }

@@ -1,10 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Triangles>
-	<Triangle>
-		<külgA>="">3.0</külgA>
-		<külgB>4.0</külgB>
-		<külgC>5.0</külgC>
-		<NurkAlfa>="">90</NurkAlfa>
-	</Triangle>
-</Triangles>
-
+﻿<?xml version="1.0" encoding="utf-8"?><Triangles><Triangle><Külg_A>2</Külg_A><Külg_B>2</Külg_B><Külg_C>2</Külg_C><Alpha>22</Alpha><Perimeeter>6</Perimeeter><Poolperimeeter>3</Poolperimeeter><Piirkond>-0,0177026185808078</Piirkond><Täpsustaja>Võrdkülgne</Täpsustaja></Triangle></Triangles>
